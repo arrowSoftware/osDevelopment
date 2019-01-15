@@ -1,3 +1,10 @@
+; This file contains labels to print a string and new line using the BIOS
+; print: prints a string to the screen using the BIOS interrupts.
+;   args: 'bx' is the base address of the string to print.
+;
+; printNewline: prints a new line to the screen using the BIOS interupts.
+;   args: None.
+
 print:
     pusha ; Push general purpose registers onto the stack.
 
