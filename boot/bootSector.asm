@@ -27,7 +27,7 @@ loadKernel:
     call printNewline
 
     mov bx, KERNEL_OFFSET ; Read from the disk and store in 0x1000
-    mov dh, 2
+    mov dh, 16 ; TODO, when this was 2 i was faling and the kernel was going wild.
     mov dl, [BOOT_DRIVE]
     call diskLoad
     ret

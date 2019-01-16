@@ -14,7 +14,7 @@ hexLoop:
 
     ; step 1. convert last char of 'dx' to ascii
     mov ax, dx     ; we will use 'ax' as our working register
-    and ax, 0x000f ; 0x1234 -> 0x0004 by masking first three to zeros
+    and ax, 0x000F ; 0x1234 -> 0x0004 by masking first three to zeros
     add al, 0x30   ; add 0x30 to N to convert it to ASCII "N"
     cmp al, 0x39   ; if > 9, add extra 8 to represent 'A' to 'F'
     jle step2      ; Jump is less than

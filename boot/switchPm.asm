@@ -1,5 +1,4 @@
 [bits 16]
-
 ; PM = Protected Mode
 switchToPm:
     cli                  ; step 1. Disable interrupts
@@ -18,7 +17,7 @@ initPm: ; Start using 32 bit instructions.
     mov fs, ax
     mov gs, ax
 
-    mov ebp, 0x9000 ; step 6. Update the stack right at the top of the free space
+    mov ebp, 0x90000 ; step 6. Update the stack right at the top of the free space
     mov esp, ebp
 
     call BEGIN_PM   ; step 7. Call a well known label with useful code.
