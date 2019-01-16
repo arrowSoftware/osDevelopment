@@ -118,10 +118,12 @@ void kprint(char *argMessage)
     {
         for (i = 0; i < MAX_ROWS; i++)
         {
-            memoryCopy(getOffset(0, i) + VIDEO_ADDRESS, getOffset(0, i - 1) + VIDEO_ADDRESS, MAX_COLS * 2);
+            memoryCopy((char *)(getOffset(0, i) + VIDEO_ADDRESS),
+                       (char *)(getOffset(0, i - 1) + VIDEO_ADDRESS),
+                       MAX_COLS * 2);
         }
 
-        lastLine = getOffset(0, MAX_ROWS - 1) + VIDEO_ADDRESS;
+        lastLine = (char *)(getOffset(0, MAX_ROWS - 1) + VIDEO_ADDRESS);
         for (i = 0; i < MAX_COLS * 2; i++)
         {
             lastLine[i] = 0;
