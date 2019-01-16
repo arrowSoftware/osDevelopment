@@ -2,15 +2,16 @@
 # $< = first dependency
 # $^ = all dependencies
 
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c)
-HEADERS   = $(wildcard kernel/*.h drivers/*.h cpu/*.h)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c)
+HEADERS   = $(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h)
 OBJECTS   = ${C_SOURCES:.c=.o cpu/interrupt.o}
 CC        = /usr/local/i386elfgcc/bin/i386-elf-gcc
 LD        = /usr/local/i386elfgcc/bin/i386-elf-ld
 GDB       = /usr/local/i386elfgcc/bin/i386-elf-gdb
 QEMU      = qemu-system-i386
 # -g for debugging symbols.
-CFLAGS    = -g
+CFLAGS    = -g -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs \
+   		    -Wall -Wextra -Werror
 NASM      = nasm
 
 os-image.bin: boot/bootSector.bin kernel.bin
@@ -45,4 +46,4 @@ debug: os-image.bin kernel.elf
 
 clean:
 	rm -rf *.bin *.dis *.o os-image.bin *.elf
-	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o cpu/*.o
+	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o cpu/*.o ligc/*.o

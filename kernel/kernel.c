@@ -1,10 +1,12 @@
 #include "../cpu/isr.h"
 #include "../cpu/timer.h"
-/*#include "../drivers/keyboard.h"*/
+#include "../drivers/keyboard.h"
 
 void main()
 {
     isrInstall();
+    irqInstall();
+
 
     /* Test the interrupts */
     __asm__ __volatile__("sti");
@@ -14,4 +16,9 @@ void main()
     /* Comment out the timer IRQ handler to read
      * the keyboard IRQs easier */
     initKeyboard();
+}
+
+void userInput(char *input)
+{
+
 }
