@@ -10,9 +10,11 @@
 /* +---+--------------------+ */
 /* The IN instruction reads from an I/O device, OUT writes. */
 
-unsigned char portByteIn(unsigned short argPort)
+#include "ports.h"
+
+u8 portByteIn(u16 argPort)
 {
-    unsigned char result;
+    u8 result;
 
     /*
      * '"=a" (result)'; set '=' the C variable '(result)' to the value of register e'a'x
@@ -22,7 +24,7 @@ unsigned char portByteIn(unsigned short argPort)
     return result;
 }
 
-void portByteOut(unsigned short argPort, unsigned char argData)
+void portByteOut(u16 argPort, u8 argData)
 {
    /*
     * Notice how here both registers are mapped to C variables and
@@ -30,17 +32,17 @@ void portByteOut(unsigned short argPort, unsigned char argData)
     * However we see a comma since there are two variables in the input area
     * and none in the 'return' area
     */
-    __asm__("out %%al, %%dx" : : "a" (argData), "d" (argPort));
+    __asm__ __volatile__("out %%al, %%dx" : : "a" (argData), "d" (argPort));
 }
 
-unsigned portWordIn(unsigned short argPort)
+u16 portWordIn(u16 argPort)
 {
-    unsigned short result;
+    u16 result;
     __asm__("in %%dx, %%ax" : "=a" (result) : "d" (argPort));
     return result;
 }
 
-void portWordOut(unsigned short argPort, unsigned short argData)
+void portWordOut(u16 argPort, u16 argData)
 {
-    __asm__("out %%ax, %%dx" : : "a" (argData), "d" (argPort));
+    __asm__ __volatile__("out %%ax, %%dx" : : "a" (argData), "d" (argPort));
 }

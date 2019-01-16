@@ -1,5 +1,6 @@
 #include "screen.h"
 #include "ports.h"
+#include "../kernel/utils.h"
 
 int printChar(char argC, int argCol, int argRow, char argAttr);
 int getCursorOffset();
@@ -12,7 +13,7 @@ void clearScreen()
 {
     int screenSize = MAX_COLS * MAX_ROWS;
     int i;
-    char *screen = (unsigned char *)VIDEO_ADDRESS;
+    char *screen = (u8 *)VIDEO_ADDRESS;
 
     for (i = 0; i < screenSize; i++)
     {
@@ -73,7 +74,7 @@ void kprint(char *argMessage)
  */
  int printChar(char argC, int argCol, int argRow, char argAttr)
 {
-    unsigned char *videoMemory =  (unsigned char *)VIDEO_ADDRESS;
+    u8 *videoMemory =  (u8 *)VIDEO_ADDRESS;
     int offset;
     int i;
     char *lastLine;
@@ -155,9 +156,9 @@ void kprint(char *argMessage)
 {
     argOffset /= 2;
     portByteOut(SCREEN_CONTROL_REG, 14);
-    portByteOut(SCREEN_DATA_REG, (unsigned char)(argOffset >> 8));
+    portByteOut(SCREEN_DATA_REG, (u8)(argOffset >> 8));
     portByteOut(SCREEN_CONTROL_REG, 15);
-    portByteOut(SCREEN_DATA_REG, (unsigned char)(argOffset & 0xFF));
+    portByteOut(SCREEN_DATA_REG, (u8)(argOffset & 0xFF));
 }
 
  int getOffset(int argCol, int argRow)
