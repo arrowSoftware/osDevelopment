@@ -2,17 +2,15 @@
 # $< = first dependency
 # $^ = all dependencies
 
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c)
-HEADERS   = $(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c libc/usrLib/*.c)
+HEADERS   = $(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h libc/usrLib/*.h)
 OBJECTS   = ${C_SOURCES:.c=.o cpu/interrupt.o}
 CC        = /usr/local/i386elfgcc/bin/i386-elf-gcc
 LD        = /usr/local/i386elfgcc/bin/i386-elf-ld
 GDB       = /usr/local/i386elfgcc/bin/i386-elf-gdb
 QEMU      = qemu-system-i386
-# -g for debugging symbols.
-CFLAGS    = -g -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs \
-   		    -Wall -Wextra -Werror
 NASM      = nasm
+CFLAGS    = -g -ffreestanding -Wall -Wextra -fno-exceptions -m32
 
 os-image.bin: boot/bootSector.bin kernel.bin
 	cat $^ > os-image.bin
@@ -36,7 +34,7 @@ debug: os-image.bin kernel.elf
 
 # To make an object, always compile from its .c
 %.o: %.c ${HEADERS}
-	${CC} ${CFLAGS} -ffreestanding -c $< -o $@
+	${CC} ${CFLAGS} -c $< -o $@
 
 %.o: %.asm
 	$(NASM) $< -f elf -o $@
@@ -46,4 +44,5 @@ debug: os-image.bin kernel.elf
 
 clean:
 	rm -rf *.bin *.dis *.o os-image.bin *.elf
-	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o cpu/*.o ligc/*.o
+	rm -rf kernel/*.o boot/*.bin drivers/*.o
+	rm -rf boot/*.o cpu/*.o libc/*.o libc/usrLb/*.o

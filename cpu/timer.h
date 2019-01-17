@@ -1,8 +1,8 @@
 #ifndef _TIMER_H_
 #define _TIMER_H_
 
-#include "../kernel/utils.h"
+#include "../cpu/types.h"
 
-void initTimer(u32 argFrequency);
+void initTimer(uint32_t argFrequency);
 
 #endif /* _TIMER_H_ */

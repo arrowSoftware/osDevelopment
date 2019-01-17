@@ -2,6 +2,7 @@
 #define _STRING_H_
 
 void intToAscii(int argNumber, char argStr[]);
+void hexToAscii(int argNumber, char argStr[]);
 void reverse(char argStr[]);
 int strlen(char argStr[]);
 void backspace(char argStr[]);

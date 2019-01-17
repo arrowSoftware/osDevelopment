@@ -1,4 +1,6 @@
 #include "string.h"
+#include "../cpu/types.h"
+#include "../drivers/screen.h"
 
 void intToAscii(int argNumber, char argStr[])
 {
@@ -25,6 +27,45 @@ void intToAscii(int argNumber, char argStr[])
     argStr[i] = '\0';
 
     reverse(argStr);
+}
+
+void hexToAscii(int argNumber, char argStr[])
+{
+    char zeros = 0;
+    int tmp;
+    int i;
+
+    append(argStr, '0');
+    append(argStr, 'x');
+
+    for (i = 28; i > 0; i -= 4)
+    {
+        tmp = (argNumber >> i) & 0xF;
+        if (tmp == 0 && zeros == 0)
+        {
+            continue;
+        }
+        zeros = 1;
+
+        if (tmp > 0xA)
+        {
+            append(argStr, tmp - 0xA + 'a');
+        }
+        else
+        {
+            append(argStr, tmp + '0');
+        }
+    }
+
+    tmp = argNumber & 0xF;
+    if (tmp >= 0xA)
+    {
+        append(argStr, tmp - 0xA + 'a');
+    }
+    else
+    {
+        append(argStr, tmp + '0');
+    }
 }
 
 void reverse(char argStr[])

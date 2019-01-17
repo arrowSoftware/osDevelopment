@@ -1,34 +1,30 @@
 #include "timer.h"
 #include "../drivers/screen.h"
-#include "../kernel/utils.h"
+#include "../cpu/ports.h"
 #include "isr.h"
+#include "../libc/function.h"
 
-u32 tick = 0;
+uint32_t tick = 0;
 
-static void timerCallback(registers_t argRegs)
+static void timerCallback(registers_t *argRegs)
 {
-    char tickAscii[256];
-
     tick++;
-    kprint("ticks: ");
-    intToAscii(tick, tickAscii);
-    kprint(tickAscii);
-    kprint("\n");
+    UNUSED(argRegs);
 }
 
-void initTimer(u32 argFrequency)
+void initTimer(uint32_t argFrequency)
 {
-    u32 divisor;
-    u32 low;
-    u32 high;
+    uint32_t divisor;
+    uint32_t low;
+    uint32_t high;
 
     /* Install the timer callback function. */
     registerInterruptHandler(IRQ0, timerCallback);
 
     /* Get the PIT value: haardware clock at 1193180 Hz. */
     divisor = 1193180 / argFrequency;
-    low = (u8)(divisor & 0xFF);
-    high = (u8)((divisor >> 8) & 0xFF);
+    low = (uint8_t)(divisor & 0xFF);
+    high = (uint8_t)((divisor >> 8) & 0xFF);
 
     /* Send the command. */
     portByteOut(0x43, 0x36); /* Command port. */

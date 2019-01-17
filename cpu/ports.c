@@ -12,19 +12,19 @@
 
 #include "ports.h"
 
-u8 portByteIn(u16 argPort)
+uint8_t portByteIn(uint16_t argPort)
 {
-    u8 result;
+    uint8_t result;
 
     /*
      * '"=a" (result)'; set '=' the C variable '(result)' to the value of register e'a'x
      * '"d" (port)': map the C variable '(port)' into e'd'x register
      */
-    __asm__("in %%dx, %%al" : "=a" (result) : "d" (argPort));
+    asm("in %%dx, %%al" : "=a" (result) : "d" (argPort));
     return result;
 }
 
-void portByteOut(u16 argPort, u8 argData)
+void portByteOut(uint16_t argPort, uint8_t argData)
 {
    /*
     * Notice how here both registers are mapped to C variables and
@@ -32,17 +32,17 @@ void portByteOut(u16 argPort, u8 argData)
     * However we see a comma since there are two variables in the input area
     * and none in the 'return' area
     */
-    __asm__ __volatile__("out %%al, %%dx" : : "a" (argData), "d" (argPort));
+    asm volatile("out %%al, %%dx" : : "a" (argData), "d" (argPort));
 }
 
-u16 portWordIn(u16 argPort)
+uint16_t portWordIn(uint16_t argPort)
 {
-    u16 result;
-    __asm__("in %%dx, %%ax" : "=a" (result) : "d" (argPort));
+    uint16_t result;
+    asm("in %%dx, %%ax" : "=a" (result) : "d" (argPort));
     return result;
 }
 
-void portWordOut(u16 argPort, u16 argData)
+void portWordOut(uint16_t argPort, uint16_t argData)
 {
-    __asm__ __volatile__("out %%ax, %%dx" : : "a" (argData), "d" (argPort));
+    asm volatile("out %%ax, %%dx" : : "a" (argData), "d" (argPort));
 }

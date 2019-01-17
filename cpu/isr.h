@@ -72,19 +72,25 @@ extern void irq15();
 #define IRQ14 46
 #define IRQ15 47
 
-/* Struct which aggregates many registers. */
-typedef struct
-{
-    u32 ds;
-    u32 edi, esi, ebp, esp, ebx, edx, ecx, eax; /* Pushed by pusha. */
-    u32 intNumber, errorCode; /* Interrupt number and error code, if applicable. */
-    u32 eip, cs, eflags, useresp, ss; /* Pushed by the processor automatically. */
+/*
+* It matches exactly the pushes on interrupt.asm. From the bottom:
+* - Pushed by the processor automatically
+* - `push byte`s on the isr-specific code: error code, then int number
+* - All the registers by pusha
+* - `push eax` whose lower 16-bits contain DS
+*/
+typedef struct {
+  uint32_t ds; /* Data segment selector */
+  uint32_t edi, esi, ebp, useless, ebx, edx, ecx, eax; /* Pushed by pusha. */
+  uint32_t intNumber, errorCode; /* Interrupt number and error code (if applicable) */
+  uint32_t eip, cs, eflags, esp, ss; /* Pushed by the processor automatically */
 } registers_t;
 
 void isrInstall();
-void isrHandler(registers_t argR);
+void isrHandler(registers_t *argR);
+void irqInstall();
 
-typedef void (*isr_t)(registers_t);
-void registerInterruptHandler(u8 argIntNumber, isr_t argHandler);
+typedef void (*isr_t)(registers_t*);
+void registerInterruptHandler(uint8_t argIntNumber, isr_t argHandler);
 
 #endif /* _ISR_H_ */

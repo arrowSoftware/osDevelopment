@@ -10,10 +10,10 @@
 #define SLAVE_PIC_COMMAND  0xA0
 #define SLAVE_PIC_DATA     0xA1
 
-u8 portByteIn(u16 argPort);
-void portByteOut(u16 argPort, u8 argData);
+uint8_t portByteIn(uint16_t argPort);
+void portByteOut(uint16_t argPort, uint8_t argData);
 
-u16 shortportWordIn(u16 argPort);
-void pordWordOut(u16 argPort, u16 argData);
+uint16_t portWordIn(uint16_t argPort);
+void portWordOut(uint16_t argPort, uint16_t argData);
 
 #endif /* _PORTS_H_ */

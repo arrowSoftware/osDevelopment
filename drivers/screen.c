@@ -1,6 +1,6 @@
 #include "screen.h"
-#include "ports.h"
-#include "../kernel/utils.h"
+#include "../cpu/ports.h"
+#include "../libc/mem.h"
 
 int printChar(char argC, int argCol, int argRow, char argAttr);
 int getCursorOffset();
@@ -13,7 +13,7 @@ void clearScreen()
 {
     int screenSize = MAX_COLS * MAX_ROWS;
     int i;
-    char *screen = (u8 *)VIDEO_ADDRESS;
+    char *screen = (char *)VIDEO_ADDRESS;
 
     for (i = 0; i < screenSize; i++)
     {
@@ -61,6 +61,13 @@ void kprint(char *argMessage)
     kprintAt(argMessage, -1, -1);
 }
 
+void kprint_backspace()
+{
+    int offset = getCursorOffset()-2;
+    int row = getOffsetRow(offset);
+    int col = getOffsetCol(offset);
+    printChar(0x08, col, row, WHITE_ON_BLACK);
+}
 
 /* PRIVATE KERNEL FUNCTIONS. */
 
@@ -74,7 +81,7 @@ void kprint(char *argMessage)
  */
  int printChar(char argC, int argCol, int argRow, char argAttr)
 {
-    u8 *videoMemory =  (u8 *)VIDEO_ADDRESS;
+    uint8_t *videoMemory =  (uint8_t *)VIDEO_ADDRESS;
     int offset;
     int i;
     char *lastLine;
@@ -106,6 +113,11 @@ void kprint(char *argMessage)
         argRow = getOffsetRow(offset);
         offset = getOffset(0, argRow + 1);
     }
+    else if (argC == 0x08)
+    {
+        videoMemory[offset] = ' ';
+        videoMemory[offset + 1] = argAttr;
+    }
     else
     {
         videoMemory[offset] = argC;
@@ -118,8 +130,8 @@ void kprint(char *argMessage)
     {
         for (i = 0; i < MAX_ROWS; i++)
         {
-            memoryCopy((char *)(getOffset(0, i) + VIDEO_ADDRESS),
-                       (char *)(getOffset(0, i - 1) + VIDEO_ADDRESS),
+            memoryCopy((uint8_t *)(getOffset(0, i) + VIDEO_ADDRESS),
+                       (uint8_t *)(getOffset(0, i - 1) + VIDEO_ADDRESS),
                        MAX_COLS * 2);
         }
 
@@ -158,9 +170,9 @@ void kprint(char *argMessage)
 {
     argOffset /= 2;
     portByteOut(SCREEN_CONTROL_REG, 14);
-    portByteOut(SCREEN_DATA_REG, (u8)(argOffset >> 8));
+    portByteOut(SCREEN_DATA_REG, (uint8_t)(argOffset >> 8));
     portByteOut(SCREEN_CONTROL_REG, 15);
-    portByteOut(SCREEN_DATA_REG, (u8)(argOffset & 0xFF));
+    portByteOut(SCREEN_DATA_REG, (uint8_t)(argOffset & 0xFF));
 }
 
  int getOffset(int argCol, int argRow)

@@ -1,24 +1,45 @@
 #include "../cpu/isr.h"
-#include "../cpu/timer.h"
-#include "../drivers/keyboard.h"
+#include "../drivers/screen.h"
+#include "kernel.h"
+#include "../libc/string.h"
+#include "../libc/usrLib/usrLib.h"
+#include "../libc/mem.h"
 
-void main()
+void kernelMain()
 {
     isrInstall();
     irqInstall();
 
+    asm("int $2");
+    asm("int $3");
 
-    /* Test the interrupts */
-    __asm__ __volatile__("sti");
-
-    initTimer(50);
-
-    /* Comment out the timer IRQ handler to read
-     * the keyboard IRQs easier */
-    initKeyboard();
+    kprint("Type something, it will go through the kernel\n"
+           "Type END to halt the CPU\n> ");
 }
 
-void userInput(char *input)
+void userInput(char *argInput)
 {
+    if (strcmp(argInput, "END") == 0)
+    {
+        kprint("Stopping the CPU\n");
+        asm volatile("hlt");
+    }
+    else if (strcmp(argInput, "PAGE") == 0)
+    {
+        uint32_t physicalAddr;
+        uint32_t page = kmalloc(1000, 1, &physicalAddr);
+        char pageStr[16] = "";
+        hexToAscii(page, pageStr);
+        char physicalAddrStr[16] = "";
+        hexToAscii(physicalAddr, physicalAddrStr);
+        kprint("page: ");
+        kprint(pageStr);
+        kprint(", physical address: ");
+        kprint(physicalAddrStr);
+        kprint("\n");
+    }
 
+    kprint("echo: ");
+    kprint(argInput);
+    kprint("\n");
 }
