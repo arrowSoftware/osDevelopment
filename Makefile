@@ -2,8 +2,8 @@
 # $< = first dependency
 # $^ = all dependencies
 
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c libc/usrLib/*.c)
-HEADERS   = $(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h libc/usrLib/*.h)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c )
+HEADERS   = $(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h )
 OBJECTS   = ${C_SOURCES:.c=.o cpu/interrupt.o}
 CC        = /usr/local/i386elfgcc/bin/i386-elf-gcc
 LD        = /usr/local/i386elfgcc/bin/i386-elf-ld
@@ -45,4 +45,4 @@ debug: os-image.bin kernel.elf
 clean:
 	rm -rf *.bin *.dis *.o os-image.bin *.elf
 	rm -rf kernel/*.o boot/*.bin drivers/*.o
-	rm -rf boot/*.o cpu/*.o libc/*.o libc/usrLb/*.o
+	rm -rf boot/*.o cpu/*.o libc/*.o

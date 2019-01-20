@@ -1,6 +1,38 @@
+/*******************************************************************************
+ * File:
+ *
+ * Description:
+ *
+ * Members:
+ *
+ * Modification History:
+ *
+ ******************************************************************************/
 #include "string.h"
 #include "../cpu/types.h"
 #include "../drivers/screen.h"
+
+int strcmp(char argStr1[], char argStr2[])
+{
+    /* Loop interator. */
+    int i;
+
+    /*
+     * Loop over the characer array checking for equal values. Skip over the
+     * loop if the strings dont match, otherwise keeo going to null terminator.
+     */
+    for (i = 0; argStr1[i] == argStr2[i]; i++)
+    {
+        /* If end of string was found inside argStr1, then return match. */
+        if (argStr1[i] == '\0')
+        {
+            return 0;
+        }
+    }
+
+    /* Strings do not match so return the difference. */
+    return argStr1[i] - argStr2[i];
+}
 
 void intToAscii(int argNumber, char argStr[])
 {
@@ -105,13 +137,4 @@ void backspace(char argStr[])
 {
     int len = strlen(argStr);
     argStr[len-1] = '\0';
-}
-
- /* Returns <0 if s1<s2, 0 if s1==s2, >0 if s1>s2 */
-int strcmp(char argStr1[], char argStr2[]) {
-    int i;
-    for (i = 0; argStr1[i] == argStr2[i]; i++) {
-        if (argStr1[i] == '\0') return 0;
-    }
-    return argStr1[i] - argStr2[i];
 }

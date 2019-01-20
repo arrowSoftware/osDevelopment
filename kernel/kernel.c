@@ -2,7 +2,6 @@
 #include "../drivers/screen.h"
 #include "kernel.h"
 #include "../libc/string.h"
-#include "../libc/usrLib/usrLib.h"
 #include "../libc/mem.h"
 
 void kernelMain()
