@@ -15,6 +15,7 @@
 void clearScreen();
 void kprintAt(char *argMessage, int argCol, int argRow);
 void kprint(char *argMessage);
+void kprintChar(char argCharacter);
 void kprint_backspace();
 
 #endif /* _SCREEN_H_ */

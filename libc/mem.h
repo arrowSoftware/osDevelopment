@@ -15,8 +15,8 @@
 #include "../cpu/types.h"
 #include <stddef.h>
 
-void memoryCopy(uint8_t *argSource, uint8_t *argDestination, int argNumBytes);
-void memorySet(uint8_t *argDestination, uint8_t argValue, uint32_t argLength);
+void memCopy(uint8_t *argSource, uint8_t *argDestination, int argNumBytes);
+void memSet(uint8_t *argDestination, uint8_t argValue, uint32_t argLength);
 
 uint32_t kmalloc(size_t argSize, int argAlign, uint32_t *argPhysicalAddr);
 

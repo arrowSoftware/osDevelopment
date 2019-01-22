@@ -56,6 +56,13 @@ void kprintAt(char *argMessage, int argCol, int argRow)
     }
 }
 
+void kprintChar(char argCharacter)
+{
+    int offset;
+    offset = getCursorOffset();
+    printChar(argCharacter, getOffsetCol(offset), getOffsetRow(offset), WHITE_ON_BLACK);
+}
+
 void kprint(char *argMessage)
 {
     kprintAt(argMessage, -1, -1);

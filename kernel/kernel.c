@@ -3,6 +3,7 @@
 #include "kernel.h"
 #include "../libc/string.h"
 #include "../libc/mem.h"
+#include "shell.h"
 
 void kernelMain()
 {
@@ -11,6 +12,8 @@ void kernelMain()
 
     asm("int $2");
     asm("int $3");
+
+    shellInit();
 
     kprint("Type something, it will go through the kernel\n"
            "Type END to halt the CPU\n> ");
@@ -28,9 +31,9 @@ void userInput(char *argInput)
         uint32_t physicalAddr;
         uint32_t page = kmalloc(1000, 1, &physicalAddr);
         char pageStr[16] = "";
-        hexToAscii(page, pageStr);
+        htoa(page, pageStr);
         char physicalAddrStr[16] = "";
-        hexToAscii(physicalAddr, physicalAddrStr);
+        htoa(physicalAddr, physicalAddrStr);
         kprint("page: ");
         kprint(pageStr);
         kprint(", physical address: ");

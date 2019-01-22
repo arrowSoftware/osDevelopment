@@ -118,7 +118,7 @@ void isrHandler(registers_t *argR)
 {
     char s[3];
     kprint("received interrrupt: ");
-    intToAscii(argR->intNumber, s);
+    itoa(argR->intNumber, s);
     kprint(s);
     kprint("\n");
     kprint(exceptionMessages[argR->intNumber]);

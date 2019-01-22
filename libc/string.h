@@ -12,12 +12,12 @@
  *  strlen
  *  reverse
  *  backspace
- *  intToAscii
- *  hexToAscii
+ *  itoa
+ *  htoa
  *
  * Todo:
  *  Update strcmp to check the sizes of each argument to compare entire string.
- *  
+ *
  * Modification History:
  *  Date         Who         Description
  *  ============================================================================
@@ -111,7 +111,7 @@ void backspace(char argStr[]);
 
 /*******************************************************************************
  * Function:
- *  intToAscii
+ *  itoa
  *
  * Description:
  *  This function will convert an integer to a character array.
@@ -123,11 +123,11 @@ void backspace(char argStr[]);
  * Returns:
  *  None.
  ******************************************************************************/
-void intToAscii(int argNumber, char argOutput[]);
+void itoa(int argNumber, char argOutput[]);
 
 /*******************************************************************************
  * Function:
- *  hexToAscii
+ *  htoa
  *
  * Description:
  *  This function will convert an integer(hex) to a character array.  It will
@@ -140,6 +140,6 @@ void intToAscii(int argNumber, char argOutput[]);
  * Returns:
  *  None.
  ******************************************************************************/
-void hexToAscii(int argNumber, char argOutput[]);
+void htoa(int argNumber, char argOutput[]);
 
 #endif /* _STRING_H_ */
