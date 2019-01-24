@@ -1,3 +1,27 @@
+/*******************************************************************************
+ * File:
+ *  isr.h
+ *
+ * Description:
+ *  This file contains the function to install interrupt service routines.
+ *
+ * Members:
+ *  isr<0...31>();
+ *  irq<0...15>();
+ *  isrInstall();
+ *  isrHandler(registers_t *argR);
+ *  irqInstall();
+ *  registerInterruptHandler(uint8_t argIntNumber, isr_t argHandler);
+ *
+ * Todo:
+ *
+ *
+ * Modification History:
+ *  Date         Who         Description
+ *  ============================================================================
+ *  01/17/19    T.Gajewski   Initial version.
+ ******************************************************************************/
+
 #ifndef _ISR_H_
 #define _ISR_H_
 
@@ -55,6 +79,39 @@ extern void irq13();
 extern void irq14();
 extern void irq15();
 
+/*
+ * Master PIC
+ * IRQ 0 – system timer (cannot be changed)
+ * IRQ 1 – keyboard controller (cannot be changed)
+ * IRQ 2 – cascaded signals from IRQs 8–15 (any devices configured to use IRQ 2
+ *         will actually be using IRQ 9)
+ * IRQ 3 – serial port controller for serial port 2
+ *         (shared with serial port 4, if present)
+ * IRQ 4 – serial port controller for serial port 1
+ *         (shared with serial port 3, if present)
+ * IRQ 5 – parallel port 2 and 3  or  sound card
+ * IRQ 6 – floppy disk controller
+ * IRQ 7 – parallel port 1. It is used for printers or for any parallel port if
+ *         a printer is not present. It can also be potentially be shared with a
+ *         secondary sound card with careful management of the port.
+ * Slave PIC
+ * IRQ 8 – real-time clock (RTC)
+ * IRQ 9 – Advanced Configuration and Power Interface (ACPI) system control
+ *         interrupt on Intel chipsets.[1] Other chipset manufacturers might use
+ *         another interrupt for this purpose, or make it available for the use
+ *         of peripherals (any devices configured to use IRQ 2 will actually be
+ *         using IRQ 9)
+ * IRQ 10 – The Interrupt is left open for the use of peripherals
+ *          (open interrupt/available, SCSI or NIC)
+ * IRQ 11 – The Interrupt is left open for the use of peripherals
+ *          (open interrupt/available, SCSI or NIC)
+ * IRQ 12 – mouse on PS/2 connector
+ * IRQ 13 – CPU co-processor  or  integrated floating point unit  or
+ *          inter-processor interrupt (use depends on OS)
+ * IRQ 14 – primary ATA channel (ATA interface usually serves hard disk
+ *          drives and CD drives)
+ * IRQ 15 – secondary ATA channel
+ */
 #define IRQ0 32
 #define IRQ1 33
 #define IRQ2 34

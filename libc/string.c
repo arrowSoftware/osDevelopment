@@ -159,11 +159,11 @@ void reverse(char argStr[])
         i++, j--)
         {
             /* Store the character move. */
-            c = argStr[i];
+            tempChar = argStr[i];
 
             /* swap the saved character and the jth char. */
             argStr[i] = argStr[j];
-            argStr[j] = c;
+            argStr[j] = tempChar;
         }
 }
 

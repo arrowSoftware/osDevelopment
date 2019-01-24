@@ -1,3 +1,25 @@
+/*******************************************************************************
+ * File:
+ *  ports.h
+ *
+ * Description:
+ *  This files contains code used to write and read from the I/O ports.
+ *
+ * Members:
+ *  portByteIn(uint16_t argPort);
+ *  portByteOut(uint16_t argPort, uint8_t argData);
+ *  portWordIn(uint16_t argPort);
+ *  portWordOut(uint16_t argPort, uint16_t argData);
+ *
+ * Todo:
+ *  None.
+ *
+ * Modification History:
+ *  Date         Who         Description
+ *  ============================================================================
+ *  01/17/19    T.Gajewski   Initial version.
+ ******************************************************************************/
+
 /* +---+--------------------+ */
 /* | r |    Register(s)     | */
 /* +---+--------------------+ */

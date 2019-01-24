@@ -7,6 +7,7 @@
 
 void kernelMain()
 {
+    clearScreen();
     isrInstall();
     irqInstall();
 
