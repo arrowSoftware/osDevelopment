@@ -1,17 +1,33 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; File:
+;   bootSector.asm
+;
+; Description:
+;   This file contains the code to boot into the kernel.
+;
+; Todo:
+;   None.
+;
+; Modification History:
+;   Date:       Author:       Description:
+;   ============================================================================
+;   1/23/2019   T.Gajewski    Initial Release.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 [org 0x7C00] ; TODO
 KERNEL_OFFSET equ 0x1000 ; The same that was used when linking the kernel
 
-    mov [BOOT_DRIVE], dl ; The BIOS sets us the boot drive in 'dl' on boot
-    mov bp, 0x9000 ; Set the stack safetly away from us.
-    mov sp, bp     ; Update stack pointer.
+mov [BOOT_DRIVE], dl ; The BIOS sets us the boot drive in 'dl' on boot
+mov bp, 0x9000       ; Set the stack safetly away from us.
+mov sp, bp           ; Update stack pointer.
 
-    mov bx, MSG_REAL_MODE
-    call print
-    call printNewline
+mov bx, MSG_REAL_MODE
+call print
+call printNewline
 
-    call loadKernel ; Read the kernel from the disk
-    call switchToPm ; disable interrupts, load GDT,  etc. Finally jumps to 'BEGIN_PM'
-    jmp $           ; Never executed.
+call loadKernel ; Read the kernel from the disk
+call switchToPm ; disable interrupts, load GDT,  etc. Finally jumps to 'BEGIN_PM'
+jmp $           ; Never executed.
 
 %include "boot/print.asm"
 %include "boot/printHex.asm"

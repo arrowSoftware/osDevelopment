@@ -1,3 +1,19 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; File:
+;   gdt.asm
+;
+; Description:
+;   Todo.
+;
+; Todo:
+;   None.
+;
+; Modification History:
+;   Date:       Author:       Description:
+;   ============================================================================
+;   1/23/2019   T.Gajewski    Initial Release.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 gdtStart:
     ; the GDT starts with a null 8-byte
     dd 0x0 ; 4 byte

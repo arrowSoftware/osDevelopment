@@ -1,3 +1,20 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; File:
+;   disk.asm
+;
+; Description:
+;   This file contains a label that will read from a disk and store the data
+;   in bx(the kernel offset).
+;
+; Todo:
+;   None.
+;
+; Modification History:
+;   Date:       Author:       Description:
+;   ============================================================================
+;   1/23/2019   T.Gajewski    Initial Release.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ; Load 'dh' sectors from drive 'dl' into ES:BX
 ; Our arguments are 'dx', dh is the number of sectors to read, 'dl' is the drive
 ; to read from.
@@ -24,7 +41,7 @@ diskLoad:
     jc diskError ; If error (stored in the carry bit)
 
     pop dx
-    cmp al, dh       ; BIOD also sets 'al' to the # of sectors read.
+    cmp al, dh       ; BIOS also sets 'al' to the # of sectors read.
     jne sectorsError ; If sectors are equal jump to error.
     popa             ; pop general purpose registers off the stack.
     ret              ; Return to caller
